@@ -16,7 +16,7 @@ import {
 
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://my-to-do-backend.herokuapp.com/graphql",
 });
 
 
