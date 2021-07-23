@@ -13,7 +13,7 @@ import { GET_ALL_TODOS, AUTHENTICATION } from "../../graphql/query";
 
 const UpdateTodo = () => {
   const authenticationQuery = useQuery(AUTHENTICATION, {
-    errorPolicy: "all",
+    errorPolicy: "ignore",
   });
   const [updateSingleTodo, { data }] = useMutation(UPDATE_TODO);
 

@@ -16,7 +16,7 @@ interface Props {
 
 const NavbarTopSide: FC<Props> = ({ children }) => {
   const { client, loading, error, data } = useQuery(AUTHENTICATION, {
-    errorPolicy: "all",
+    errorPolicy: "ignore",
   });
   console.log(data);
   const history = useHistory()
@@ -63,7 +63,7 @@ const NavbarTopSide: FC<Props> = ({ children }) => {
             <Button variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
-        {data && !data.me ? (
+        {data && !data?.me ? (
           <>
             <Nav.Link href="/signin">Sign in</Nav.Link>
             <Nav.Link href="/signup">Sign up</Nav.Link>{" "}
@@ -71,7 +71,7 @@ const NavbarTopSide: FC<Props> = ({ children }) => {
         ) : (
           <>
             <Nav.Link href="/manage-todo">
-              {data && data.me.username.toUpperCase()}
+              {data && data?.me?.username?.toUpperCase()}
             </Nav.Link>
             <Button variant="outline-success" onClick={handleLogout}>
               Logout

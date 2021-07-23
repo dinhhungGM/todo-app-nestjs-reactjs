@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -13,9 +13,9 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../graphql/mutation";
-
+import {AUTHENTICATION } from "../../graphql/query"
 import Swal from "sweetalert2";
 
 function Copyright() {
@@ -66,7 +66,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-
+  const authenticationQuery = useQuery(AUTHENTICATION, {
+    errorPolicy: "ignore",
+  });
   const [signInFormData, SetSignInFormData] = useState({
     username: "",
     password: "",
@@ -79,6 +81,7 @@ export default function SignInSide() {
 
   const [login, { data }] = useMutation(LOGIN_MUTATION);
   const history = useHistory();
+
   const handleSignInFormSubmit = async (
     e: React.ChangeEvent<HTMLFormElement>
   ) => {
@@ -91,16 +94,17 @@ export default function SignInSide() {
           password,
         },
       });
-
+      
       Swal.fire({
         icon: "success",
         title: "Login Successful",
       });
+      
     } catch (error) {
       console.log(error);
       Swal.fire({
         icon: "error",
-        title: "Oops... Username or password incorrect",
+        title: error.message,
       });
     }
 
@@ -111,12 +115,15 @@ export default function SignInSide() {
   };
 
   if (data) {
-    console.log(data);
-    history.push('/manage-todo')
-    localStorage.setItem("token", data.login);
+    localStorage.setItem("token", data.login);  
+    console.log("rediret");
+    window.location.reload();
     
   }
 
+  
+  
+  
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />

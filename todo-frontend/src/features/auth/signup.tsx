@@ -2,7 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-
+import {useState} from "react"
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -10,6 +10,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Swal from "sweetalert2";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from "../../graphql/mutation";
 
 function Copyright() {
   return (
@@ -45,8 +48,49 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Signup() {
+  const [signup, { data }] = useMutation(CREATE_USER);
   const classes = useStyles();
-
+  const [signUpFormData, SetSignUpFormData] = useState({
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const {username, password, confirmPassword} = signUpFormData
+  const onSignUpFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    SetSignUpFormData({ ...signUpFormData, [e.target.name]: e.target.value });
+  };
+  const handleSignUpFormSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if(password !== confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          title: "Password is not match",
+        })
+      }else{
+        await signup({
+          variables: {
+            username, password
+          }
+        })
+        Swal.fire({
+          icon: "success",
+          title: "Sign up successfully !!!",
+        })
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: error.message.toUpperCase(),
+      })
+    }
+    SetSignUpFormData({
+      username: "",
+      password: "",
+      confirmPassword: "",
+    })
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -57,7 +101,7 @@ export default function Signup() {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSignUpFormSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -68,6 +112,8 @@ export default function Signup() {
             name="username"
             autoComplete="username"
             autoFocus
+            value={username}
+            onChange={onSignUpFormChange}
           />
           <TextField
             variant="outlined"
@@ -79,17 +125,21 @@ export default function Signup() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={onSignUpFormChange}
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="comfirmPassword"
+            name="confirmPassword"
             label="Comfirm Password"
             type="password"
             id="comfirmPassword"
             autoComplete="current-password"
+            value={confirmPassword}
+            onChange={onSignUpFormChange}
           />
           <Button
             type="submit"

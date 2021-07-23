@@ -3,18 +3,22 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_TODOS, AUTHENTICATION } from "../../graphql/query";
 import TodoDetail from "./TodoDetail";
 import CreateNewTodo from "./CreateNewTodo"
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 
 
 const ManageTodo = () => {
   const authenticationQuery = useQuery(AUTHENTICATION, {
-    errorPolicy: "all",
+    errorPolicy: "ignore",
   });
   const { loading, error, data } = useQuery(GET_ALL_TODOS, {
     variables: {
       userId: authenticationQuery?.data?.me?._id,
     },
+    errorPolicy: "ignore",
   });
 
+ 
+  
   return (
     <Grid container spacing={5}>
       <Grid container item xs={12} spacing={4}>

@@ -59,4 +59,13 @@ const UPDATE_TODO = gql`
 }
 `;
 
-export { LOGIN_MUTATION, SIGNUP_MUATION, CREATE_TODO, DELETE_TODO, UPDATE_TODO };
+const CREATE_USER = gql`
+  mutation signup($username: String!, $password: String!){
+	createSingleUser(input: {
+    username: $username,
+    password: $password
+  })
+}
+`;
+
+export { LOGIN_MUTATION, SIGNUP_MUATION, CREATE_TODO, DELETE_TODO, UPDATE_TODO, CREATE_USER };

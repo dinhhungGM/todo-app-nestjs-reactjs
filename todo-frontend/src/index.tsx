@@ -19,6 +19,7 @@ const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
 
+
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   operation.setContext(({ headers = {} }) => ({
@@ -33,7 +34,8 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: concat(authMiddleware, httpLink)
+  link: concat(authMiddleware, httpLink),
+  
 });
 
 ReactDOM.render(

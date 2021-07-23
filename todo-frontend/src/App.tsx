@@ -12,8 +12,8 @@ import ManageTodo from "./features/me/ManageTodo";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const { client, loading, error, data } = useQuery(AUTHENTICATION, {
-    errorPolicy: "all",
+  const { loading, error, data } = useQuery(AUTHENTICATION, {
+    errorPolicy: "ignore",
   });
   let isAuthenticated = false;
   if (data && data.me) {
@@ -33,22 +33,25 @@ function App() {
     <Router>
       <Navbar>
         <Switch>
-          <ProtectedRoute {...defaultProtectedRouteProps} path="/manage-todo">
+          <ProtectedRoute {...defaultProtectedRouteProps} path="/manage-todo" exact>
             <ManageTodo />
           </ProtectedRoute>
 
-          <ProtectedRoute {...defaultProtectedRouteProps2} path="/signin">
+          
+          <ProtectedRoute {...defaultProtectedRouteProps2} path="/signin" exact>
             <SignInSide />
           </ProtectedRoute>
 
-          <ProtectedRoute {...defaultProtectedRouteProps2} path="/signin">
-            <SignInSide />
+          <ProtectedRoute {...defaultProtectedRouteProps2} path="/signup" exact>
+            <SignUpSide />
           </ProtectedRoute>
 
-          {/* <Route path="/signin">
+          
+
+          {/* <Route path="/signin" exact>
           <SignInSide />
           </Route>
-          <Route path="/signup">
+          <Route path="/signup" exact>
             <SignUpSide />
           </Route> */}
 

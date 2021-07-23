@@ -8,7 +8,7 @@ import { GET_ALL_TODOS, AUTHENTICATION } from "../../graphql/query";
 
 const CreateNewTodo = () => {
   const authenticationQuery = useQuery(AUTHENTICATION, {
-    errorPolicy: "all",
+    errorPolicy: "ignore",
   });
   const [createSingleTodo, { data }] = useMutation(CREATE_TODO);
   const [newTodo, SetNewTodo] = useState({
