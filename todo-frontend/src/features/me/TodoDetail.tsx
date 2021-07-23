@@ -39,7 +39,7 @@ const TodoDetail: FC<PropsTodo> = ({ _id, title, description }) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const authenticationQuery = useQuery(AUTHENTICATION, {
-    errorPolicy: "all",
+    errorPolicy: "ignore",
   });
   const [DeleteTodo, { data }] = useMutation(DELETE_TODO);
   const handleDeleteTodo = async (e: any) => {
