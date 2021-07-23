@@ -1,0 +1,49 @@
+type User {
+    _id: ID
+    username: String!
+    password: String!
+}
+
+type Todo {
+    _id: ID
+    title: String!
+    description: String
+    user: User
+}
+
+type Query {
+    me: User
+    getAllUsers: [User]
+    getAllTodos: [Todo]
+    getAllTodosOfUser(userId: ID): [Todo]
+    getOneTodo(_id: ID): Todo
+    
+}
+
+input NewUser {
+    username: String!
+    password: String!
+}
+
+input NewTodo {
+    title: String!
+    description: String
+    userId: ID
+}
+
+input UpdateTodoData {
+    _id: ID!
+    title: String
+    description: String
+}
+
+
+type Mutation {
+    login(input: NewUser): String
+    createSingleUser(input: NewUser): String
+    createSingleTodo(input: NewTodo): Todo
+    updateSingleTodo(input: UpdateTodoData): Todo
+    deleteSingleTodo(id: ID): Todo
+    deleteSingleUser(id: ID): String
+
+}
