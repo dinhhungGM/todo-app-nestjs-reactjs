@@ -4,13 +4,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'node:path';
 import { UsersModule } from './users/users.module';
 import { TodosModule } from './todos/todos.module';
-import { APP_GUARD } from '@nestjs/core';
-import {AuthGuard} from './auth.guard';
+
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://admin:admin@cluster0.rrcyu.mongodb.net/my_todo_app_db?retryWrites=true&w=majority',
+      'mongodb+srv://localhost:27017/test_database',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

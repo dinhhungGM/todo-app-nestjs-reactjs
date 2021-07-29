@@ -1,0 +1,14 @@
+version: "3"
+services: 
+    frontend: 
+        build: ./todo-frontend
+        ports: 
+            - '3000:80'
+        depends_on: 
+            - backend
+    backend: 
+        build: ./todo-backend
+        ports: 
+            - '4000:4000'
+
+        
