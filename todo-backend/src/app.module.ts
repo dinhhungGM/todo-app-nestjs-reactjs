@@ -21,7 +21,13 @@ import { TodosModule } from './todos/todos.module';
       typePaths: ['./**/*.gql'],
       definitions: {path: join(process.cwd(), 'src/graphql.ts')},
       context: ({req}) => ({headers: req.headers}),
-      
+      cors: {
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+        credentials: true
+      }
     }),
     UsersModule,
     TodosModule,
