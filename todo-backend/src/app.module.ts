@@ -19,11 +19,7 @@ import { TodosModule } from './todos/todos.module';
     GraphQLModule.forRoot({
       typePaths: ['./**/*.gql'],
       definitions: { path: join(process.cwd(), 'src/graphql.ts') },
-      context: ({ req }) => ({ headers: req.headers }),
-      cors: {
-        credentials: true,
-        origin: true,
-      },
+      context: ({ req }) => ({ headers: req.headers })
     }),
     UsersModule,
     TodosModule,
