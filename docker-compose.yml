@@ -6,9 +6,14 @@ services:
             - '3000:80'
         depends_on: 
             - backend
+        networks: 
+            - todo-networks
     backend: 
         build: ./todo-backend
         ports: 
             - '4000:4000'
-
-        
+        networks: 
+            - todo-networks
+networks: 
+    todo-networks:
+        driver: bridge
