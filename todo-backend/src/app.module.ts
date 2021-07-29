@@ -21,6 +21,7 @@ import { TodosModule } from './todos/todos.module';
       typePaths: ['./**/*.gql'],
       definitions: {path: join(process.cwd(), 'src/graphql.ts')},
       context: ({req}) => ({headers: req.headers}),
+      
     }),
     UsersModule,
     TodosModule,
