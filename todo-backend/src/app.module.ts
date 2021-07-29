@@ -9,7 +9,7 @@ import { TodosModule } from './todos/todos.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://admin:admin@cluster0.sxlyo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+      'mongodb+srv://hung:1@cluster0.sxlyo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
