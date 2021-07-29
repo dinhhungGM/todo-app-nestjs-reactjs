@@ -1,10 +1,9 @@
-import { Module} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'node:path';
 import { UsersModule } from './users/users.module';
 import { TodosModule } from './todos/todos.module';
-
 
 @Module({
   imports: [
@@ -19,19 +18,15 @@ import { TodosModule } from './todos/todos.module';
     ),
     GraphQLModule.forRoot({
       typePaths: ['./**/*.gql'],
-      definitions: {path: join(process.cwd(), 'src/graphql.ts')},
-      context: ({req}) => ({headers: req.headers}),
+      definitions: { path: join(process.cwd(), 'src/graphql.ts') },
+      context: ({ req }) => ({ headers: req.headers }),
       cors: {
-        origin: "*",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        preflightContinue: false,
-        optionsSuccessStatus: 204,
-        credentials: true
-      }
+        credentials: true,
+        origin: true,
+      },
     }),
     UsersModule,
     TodosModule,
   ],
-  
 })
 export class AppModule {}
