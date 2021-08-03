@@ -3,17 +3,19 @@ services:
     frontend: 
         build: ./todo-frontend
         ports: 
-            - '3000:80'
+            - 3000:80
         depends_on: 
             - backend
         networks: 
             - todo-networks
+        links: 
+            - backend
     backend: 
         build: ./todo-backend
         ports: 
-            - '4000:4000'
+            - 4000:4000
         networks: 
             - todo-networks
+    
 networks: 
     todo-networks:
-        driver: bridge
